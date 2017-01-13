@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import {requests} from './utils/requests';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk'
 import trsReducer from './reducers/index';
 import { Provider } from 'react-redux';
+import defaultStore from './initial/defaultStore'
 
 
 // let store = createStore(trsReducer, {});
@@ -19,8 +21,13 @@ import { Provider } from 'react-redux';
 
 const success = (projects) => {
     console.log(projects);
-    let defaultStore = { projects: projects };
-    let store = createStore(trsReducer, defaultStore);
+    let storeObject = defaultStore(
+        {
+            projects: {
+                items: projects
+            }
+        });
+    let store = createStore(trsReducer, storeObject, applyMiddleware(thunkMiddleware));
 
     ReactDOM.render(
         <Provider store={store}>

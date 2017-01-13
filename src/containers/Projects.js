@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from "react-redux/dist/react-redux";
 import Project from './Project';
+import {refreshProject} from "../actions/index";
 
 
 class Projects extends Component {
@@ -10,9 +11,8 @@ class Projects extends Component {
                 <Project
                     key={project.id}
                     index={index}
-                    name={project.name}
-                    description={project.description}
-                    tasks={project.tasks}
+                    {...project}
+                    onRefreshProject={() => { this.props.onRefreshProject(project); }}
                 />
             )
         });
@@ -32,9 +32,15 @@ Projects.propTypes = {
 
 const mapStateToProps = state => {
     return {
-        projects: state.projects || []
+        projects: state.projects.items || []
     };
 };
 
-Projects = connect(mapStateToProps)(Projects);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onRefreshProject: (project) => { dispatch(refreshProject(project)) }
+    }
+};
+
+Projects = connect(mapStateToProps, mapDispatchToProps)(Projects);
 export default Projects;

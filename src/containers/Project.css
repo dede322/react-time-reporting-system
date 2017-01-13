@@ -1,0 +1,8 @@
+
+.project .project-title {
+    display: inline-block;
+}
+
+.project-title .spinner {
+    margin-left: 1em;
+}

@@ -1,5 +1,5 @@
-import dispatch from "redux";
-import {requests} from "../utils/requests";
+// import { dispatch } from 'redux';
+import { requests } from "../utils/requests";
 
 export const REQUEST_PROJECTS = 'REQUEST_PROJECTS';
 export const RECEIVE_PROJECTS = 'RECEIVE_PROJECTS';
@@ -8,7 +8,7 @@ export const RECEIVE_PROJECT = 'RECEIVE_PROJECT';
 
 const requestProjects = () => {
     return {
-        type: REQUEST_PROJECTS
+        type: REQUEST_PROJECTS,
     }
 };
 
@@ -19,36 +19,40 @@ const receiveProjects = (projects) => {
     }
 };
 
-
 export const refreshProjects = () => {
-    dispatch(requestProjects());
+    return (dispatch) => {
+        dispatch(requestProjects());
 
-    let success = (projects) => {
-        dispatch(receiveProjects(projects));
-    };
+        let success = (projects) => {
+            return dispatch(receiveProjects(projects));
+        };
 
-    requests({ url: 'projects/', success: success, error: (error) => console.log('Error: ' + error) });
-};
-
-const requestProject = () => {
-    return {
-        type: REQUEST_PROJECT
+        requests({url: 'projects/', success: success, error: (error) => console.log('Error: ' + error)});
     }
 };
 
-const receiveProject = (projects) => {
+const requestProject = (project) => {
+    return {
+        type: REQUEST_PROJECT,
+        project: project
+    }
+};
+
+const receiveProject = (project) => {
     return {
         type: RECEIVE_PROJECT,
-        projects: projects
+        project: project
     }
 };
 
-export const refreshProject = (id) => {
-    dispatch(requestProject(id));
+export const refreshProject = (project) => {
+    return (dispatch) => {
+        dispatch(requestProject(project));
 
-    let success = (project) => {
-        dispatch(receiveProject(project));
-    };
+        let success = (project) => {
+            return dispatch(receiveProject(project));
+        };
 
-    requests({ url: 'projects/' + id + '/', success: success, error: (error) => console.log('Error: ' + error) });
+        requests({ url: 'projects/' + project.id + '/', success: success, error: (error) => console.log('Error: ' + error) });
+    }
 };

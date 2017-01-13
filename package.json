@@ -1,6 +1,12 @@
 {
   "name": "trs-front",
   "version": "0.1.0",
+  "babel": {
+    "plugins": [
+      "transform-decorators-legacy",
+      "transform-class-properties"
+    ]
+  },
   "private": true,
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -12,7 +18,8 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

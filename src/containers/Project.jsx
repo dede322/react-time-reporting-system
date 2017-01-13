@@ -1,29 +1,30 @@
 import React, { Component, PropTypes } from 'react';
-import { dispatch } from 'redux';
+// import { dispatch } from 'redux';
 import { connect } from 'react-redux'
-import Task from '../components/Task'
-import Button from './Button'
-import {refreshProject} from '../actions/index';
+import Task from '../components/tasks/Task'
+import Button from '../components/common/Button'
+// import {refreshProject} from '../actions/index';
+import Spinner from '../components/common/Spinner'
+import "./Project.css"
 
 class Project extends Component {
     render() {
         const tasks = this.props.tasks.map((task, index) => <Task key={index} name={task.name}/> );
         return (
-            <div>
-                <div><h3>{this.props.name}</h3></div>
+            <div className="project">
+                <div>
+                    <h3 className="project-title">{this.props.name}. loading: {this.props.isLoading}</h3>
+                    <Spinner showSpinner={this.props.isLoading}/>
+                </div>
                 <div>{this.props.description}</div>
                 <div>
                     Tasks:
                     <br/>
                     {tasks}
                 </div>
-                <Button text='Refresh tasks' onClick={this.refreshTasks}/>
+                <Button text='Refresh tasks' onClick={this.props.onRefreshProject}/>
             </div>
         )
-    }
-
-    refreshTasks = () => {
-        dispatch(refreshProject(this.props.index));
     }
 }
 

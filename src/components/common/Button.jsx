@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import noop from "../utils/noop";
+import noop from "../../utils/noop";
 
 class Button extends Component {
     render() {
