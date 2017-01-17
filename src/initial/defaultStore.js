@@ -1,14 +1,9 @@
-const defaultData = {
-    projects: {
-        isLoading: false
-    }
-};
-
 const defaultStore = (store) => {
-    if (store) {
-        return Object.assign(defaultData, store);
-    } else {
-        return defaultData;
+    return {
+        projects: {
+            items: [],
+            isLoading: false
+        }
     }
 };
 

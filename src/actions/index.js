@@ -1,5 +1,4 @@
-// import { dispatch } from 'redux';
-import { requests } from "../utils/requests";
+import requests from "../utils/requests";
 
 export const REQUEST_PROJECTS = 'REQUEST_PROJECTS';
 export const RECEIVE_PROJECTS = 'RECEIVE_PROJECTS';
@@ -53,6 +52,6 @@ export const refreshProject = (project) => {
             return dispatch(receiveProject(project));
         };
 
-        requests({ url: 'projects/' + project.id + '/', success: success, error: (error) => console.log('Error: ' + error) });
+        requests.send({ url: 'projects/' + project.id + '/', success: success, error: (error) => console.log('Error: ' + error) });
     }
 };

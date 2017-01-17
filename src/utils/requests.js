@@ -1,17 +1,40 @@
-import { domain } from '../config'
 import $ from 'jquery'
 import noop from "./noop";
 
-export const requests = (params) => {
-    const url = domain + params.url;
-    const type = params.type || 'GET';
-    const success = params.success || noop;
-    const error = params.error || noop;
+class Requests {
+    _serverAdress = '';
+    _requestInterceprors = [];
+    _responseInterceptors = [];
+    _store = null;
 
-    $.ajax({
-        url: url,
-        type: type,
-        success: success,
-        error: error
-    });
-};
+    setServerAdress = (serverAdress) => {
+        this._serverAdress = serverAdress;
+    };
+
+    setStore = (store) => {
+        this._store = store;
+    };
+
+    send = (params) => {
+        params = this._generateRequestParams(params);
+
+        this._requestInterceprors.forEach(function (interceptor) {
+            params = interceptor(params);
+        });
+
+        $.ajax(params);
+    };
+
+    _generateRequestParams = (params) => {
+        return {
+            url: this._serverAdress + params.url,
+            type: params.type || 'GET',
+            success: params.success || noop,
+            error: params.error || noop
+        }
+    }
+}
+
+let requests = new Requests();
+
+export default requests;
